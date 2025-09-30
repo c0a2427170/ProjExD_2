@@ -49,6 +49,16 @@ def gameover(screen: pg.Surface) -> None:
     time.sleep(5)
 
 
+def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
+    bb_imgs = []
+    for r in range(1,11):
+        bb_img = pg.Surface((20*r, 20*r))
+        pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+        bb_imgs.append(bb_img)
+    bb_accs = [a for a in range(1, 11)]
+    return bb_imgs,bb_accs
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -65,6 +75,7 @@ def main():
     vx, vy =+5, +5
     clock = pg.time.Clock()
     tmr = 0
+    bb_imgs, bb_accs = init_bb_imgs()
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -97,6 +108,11 @@ def main():
             vx *= -1
         if not tate:  # 縦方向にはみ出していたら
             vy *= -1
+        avx = vx*bb_accs[min(tmr//500, 9)]
+        avy = vy*bb_accs[min(tmr//500, 9)]
+        bb_img = bb_imgs[min(tmr//500, 9)]  # 爆弾拡大
+        bb_rct.move_ip(avx, avy)  # 爆弾加速
+        bb_img.set_colorkey((0,0,0))
         screen.blit(bb_img, bb_rct)  # 爆弾描画
         pg.display.update()
         tmr += 1
