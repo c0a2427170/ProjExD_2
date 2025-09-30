@@ -34,7 +34,7 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     return yoko, tate
 
 
-def gameover(screen: pg.Surface) -> None:
+def gameover(screen: pg.Surface) -> None: #演習1
     bl_img =  pg.Surface((WIDTH, HEIGHT))
     pg.draw.rect(bl_img, (0, 0, 0), (0,0,WIDTH, HEIGHT))
     bl_img.set_alpha(128)
@@ -49,7 +49,7 @@ def gameover(screen: pg.Surface) -> None:
     time.sleep(5)
 
 
-def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
+def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]: #演習2
     bb_imgs = []
     for r in range(1,11):
         bb_img = pg.Surface((20*r, 20*r))
