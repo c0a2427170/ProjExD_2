@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 import pygame as pg
 
 
@@ -24,7 +25,6 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     引数：こうかとんRect or ばくだんRect
     戻り値：判定結果タプル (横方向,縦方向)
     画面内ならTrue/画面外ならFalse
-
     """
     yoko, tate = True, True
     if rct.left < 0 or WIDTH < rct.right:  # 横方向にはみ出ていたら
@@ -34,6 +34,19 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     return yoko, tate
 
 
+def gameover(screen: pg.Surface) -> None:
+    bl_img =  pg.Surface((WIDTH, HEIGHT))
+    pg.draw.rect(bl_img, (0, 0, 0), (0,0,WIDTH, HEIGHT))
+    bl_img.set_alpha(128)
+    fonto = pg.font.Font(None, 50)
+    txt = fonto.render("Game Over",True, (255, 255, 255))
+    bl_img.blit(txt,(450, 300))
+    cry_img = pg.image.load("fig/8.png")
+    bl_img.blit(cry_img,(400, 280))
+    bl_img.blit(cry_img,(640, 280))
+    screen.blit(bl_img, (0,0))
+    pg.display.update()
+    time.sleep(5)
 
 
 def main():
@@ -58,7 +71,7 @@ def main():
                 return
         screen.blit(bg_img, [0, 0]) 
         if kk_rct.colliderect(bb_rct):  # こうかとんと爆弾の衝突判定
-            return  # ゲームオーバー
+            return gameover(screen) # ゲームオーバー
 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
