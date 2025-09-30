@@ -59,6 +59,20 @@ def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
     return bb_imgs,bb_accs
 
 
+# def get_kk_imgs() -> dict[tuple[int, int], pg.Surface]:
+#     kk_dict = {
+#         ( 0, 0): rotozoom(kk_img,45,1.0) # キー押下がない場合
+#         (+5, 0): rotozoom() # 右
+#         (+5,-5): rotozoom() # 右上
+#         ( 0,-5): rotozoom() # 上
+#         (-5,-5): rotozoom() # 左上
+#         (-5, 0): rotozoom() # 左
+#         (-5,+5): rotozoom() # 左下
+#         ( 0,+5): rotozoom() # 下
+#         (+5,+5): rotozoom() # 右下
+#     }
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
